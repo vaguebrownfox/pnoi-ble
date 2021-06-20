@@ -1,3 +1,7 @@
 # Pnoi BLE
 
-working with web bluetooth : Pnoi-Phone webapp
+Working with web bluetooth : Pnoi-Phone webapp
+
+branches
+
+main - basic setup
