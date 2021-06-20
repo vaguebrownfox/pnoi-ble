@@ -69,4 +69,4 @@ class Pnoi {
 	}
 }
 
-module.exports.pnoi = new Pnoi();
+export const pnoi = new Pnoi();
