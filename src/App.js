@@ -58,6 +58,7 @@ const useStyles = makeStyles(() => ({
 	recdiv: {
 		display: "flex",
 		flexDirection: "column-reverse",
+		justifyContent: "center",
 		flex: 1,
 		paddingBottom: 64,
 	},
@@ -76,6 +77,10 @@ export default function App() {
 				.then(() => {
 					setDevice(pnoi.device);
 					console.log("connected");
+				})
+				.catch((e) => {
+					console.log(e);
+					setDevice(null);
 				});
 		} else {
 			pnoi.disconnect();
@@ -136,7 +141,7 @@ export default function App() {
 				/>
 			</div>
 			<div className={classes.recdiv} sx={{ my: 48 }}>
-				<RecControl />
+				<RecControl {...{ device }} />
 			</div>
 		</Container>
 	);

@@ -5,10 +5,23 @@ import { IconButton, Tooltip, Typography } from "@material-ui/core";
 // import RecordStartIcon from "@material-ui/icons/Mic";
 import RecordStartIcon from "@material-ui/icons/FiberManualRecordRounded";
 import RecordStopIcon from "@material-ui/icons/StopRounded";
-import DoneIcon from "@material-ui/icons/ArrowForwardRounded";
 
-const RecControl = ({ handleRecord, handleDone, isRecording, recDone }) => {
+import { pnoi } from "../bluetooth/Pnoi";
+
+const RecControl = ({ device, isRecording, recDone }) => {
 	const classes = useStyles();
+
+	const [recorder, setRecorder] = React.useState(false);
+
+	const handleRecord = () => {
+		if (device) {
+			if (!recorder) {
+				pnoi.writeRecord(0x0a).then(() => setRecorder(true));
+			} else {
+				pnoi.writeRecord(0x0b).then(() => setRecorder(false));
+			}
+		}
+	};
 
 	return (
 		<div className={classes.root}>

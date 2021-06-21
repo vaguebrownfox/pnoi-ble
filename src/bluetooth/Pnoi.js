@@ -30,6 +30,15 @@ class Pnoi {
 		return this.device.gatt.connect();
 	}
 
+	writeRecord(data) {
+		var temp = Buffer.alloc(1);
+		temp.writeUInt8(data);
+		return this.device.gatt
+			.getPrimaryService(0xfff0)
+			.then((service) => service.getCharacteristic(0xfff4))
+			.then((characteristic) => characteristic.writeValue(temp));
+	}
+
 	startProximityNotifications(listener) {
 		return this.device.gatt
 			.getPrimaryService(0xfff0)
