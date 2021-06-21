@@ -6,3 +6,4 @@ branches
 
 main - basic setup
 rssi - notify rssi
+rec - send rec commands
