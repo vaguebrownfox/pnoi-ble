@@ -2,13 +2,12 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { IconButton, Tooltip, Typography } from "@material-ui/core";
 
-// import RecordStartIcon from "@material-ui/icons/Mic";
 import RecordStartIcon from "@material-ui/icons/FiberManualRecordRounded";
 import RecordStopIcon from "@material-ui/icons/StopRounded";
 
 import { pnoi } from "../bluetooth/Pnoi";
 
-const RecControl = ({ device, isRecording, recDone }) => {
+const RecControl = ({ device, recDone }) => {
 	const classes = useStyles();
 
 	const [recorder, setRecorder] = React.useState(false);
@@ -16,9 +15,9 @@ const RecControl = ({ device, isRecording, recDone }) => {
 	const handleRecord = () => {
 		if (device) {
 			if (!recorder) {
-				pnoi.writeRecord(0x0a).then(() => setRecorder(true));
+				pnoi.recordControl(0x0a).then(() => setRecorder(true));
 			} else {
-				pnoi.writeRecord(0x0b).then(() => setRecorder(false));
+				pnoi.recordControl(0x0b).then(() => setRecorder(false));
 			}
 		}
 	};
@@ -34,22 +33,13 @@ const RecControl = ({ device, isRecording, recDone }) => {
 					>
 						<Tooltip
 							title={`${
-								recorder
-									? "Stop recording"
-									: recDone
-									? "Redo recording?"
-									: "Start recording"
+								recorder ? "Stop recording" : "Start recording"
 							}`}
 							placement="top"
 							arrow
 						>
 							{recorder ? (
 								<RecordStopIcon
-									classes={{ root: classes.recIcon }}
-									fontSize="large"
-								/>
-							) : recDone ? (
-								<RecordStartIcon
 									classes={{ root: classes.recIcon }}
 									fontSize="large"
 								/>
