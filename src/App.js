@@ -77,6 +77,7 @@ export default function App() {
 				.then(() => {
 					setDevice(pnoi.device);
 					console.log("connected");
+					// handleRssi();
 				})
 				.catch((e) => {
 					console.log(e);
