@@ -9,10 +9,10 @@ class Pnoi {
 			filters: [
 				{
 					name: "LE_Pnoi",
-					services: [0xcdcd],
+					services: [0xcafe],
 				},
 			],
-			optionalServices: [0xfff0],
+			optionalServices: [0xace0, 0xfad0],
 		};
 		return navigator.bluetooth.requestDevice(options).then((device) => {
 			this.device = device;
@@ -23,26 +23,27 @@ class Pnoi {
 		});
 	}
 
-	connect() {
+	connect(setDeviceState) {
 		if (!this.device) {
 			return Promise.reject("Device is not connected.");
 		}
+		this.setDeviceState = setDeviceState;
 		return this.device.gatt.connect();
 	}
 
-	writeRecord(data) {
+	recordControl(command) {
 		var temp = Buffer.alloc(1);
-		temp.writeUInt8(data);
+		temp.writeUInt8(command);
 		return this.device.gatt
-			.getPrimaryService(0xfff0)
-			.then((service) => service.getCharacteristic(0xfff4))
+			.getPrimaryService(0xace0)
+			.then((service) => service.getCharacteristic(0xace1))
 			.then((characteristic) => characteristic.writeValue(temp));
 	}
 
 	startProximityNotifications(listener) {
 		return this.device.gatt
-			.getPrimaryService(0xfff0)
-			.then((service) => service.getCharacteristic(0xfff5))
+			.getPrimaryService(0xfad0)
+			.then((service) => service.getCharacteristic(0xfad1))
 			.then((characteristic) => characteristic.startNotifications())
 			.then((characteristic) =>
 				characteristic.addEventListener(
@@ -54,8 +55,8 @@ class Pnoi {
 
 	stopProximityNotifications(listener) {
 		return this.device.gatt
-			.getPrimaryService(0xfff0)
-			.then((service) => service.getCharacteristic(0xfff5))
+			.getPrimaryService(0xfad0)
+			.then((service) => service.getCharacteristic(0xfad1))
 			.then((characteristic) => characteristic.stopNotifications())
 			.then((characteristic) =>
 				characteristic.removeEventListener(
@@ -74,6 +75,7 @@ class Pnoi {
 
 	onDisconnected() {
 		console.log("Device is disconnected.");
+		this.setDeviceState(null);
 		this.device = null;
 	}
 }
