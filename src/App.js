@@ -117,7 +117,7 @@ export default function App() {
 					style={{ color: blue[800], fontWeight: "bold" }}
 					variant="h6"
 				>
-					Pnoi BLE
+					Pnoi BLE v0x06
 				</Typography>
 				<IconButton variant="contained" onClick={handleOn}>
 					<PowerIcon
