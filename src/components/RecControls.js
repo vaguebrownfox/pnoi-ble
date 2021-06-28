@@ -34,7 +34,7 @@ const RecControl = ({ device, isRecording, recDone }) => {
 					>
 						<Tooltip
 							title={`${
-								isRecording
+								recorder
 									? "Stop recording"
 									: recDone
 									? "Redo recording?"
@@ -43,7 +43,7 @@ const RecControl = ({ device, isRecording, recDone }) => {
 							placement="top"
 							arrow
 						>
-							{isRecording ? (
+							{recorder ? (
 								<RecordStopIcon
 									classes={{ root: classes.recIcon }}
 									fontSize="large"
@@ -64,7 +64,11 @@ const RecControl = ({ device, isRecording, recDone }) => {
 
 					<Typography color="secondary" variant="caption">
 						{`${
-							isRecording ? "Stop" : recDone ? "Redo?" : "Start"
+							recorder
+								? "Recording..."
+								: recDone
+								? "Redo?"
+								: "Start"
 						}`}
 					</Typography>
 				</div>
@@ -94,7 +98,14 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 		flexDirection: "column",
 		alignItems: "center",
-		width: "100%",
+
+		margin: theme.spacing(8),
+		padding: theme.spacing(2),
+
+		borderStyle: "solid",
+		borderWidth: 0,
+		borderColor: theme.palette.secondary.main,
+		borderRadius: 8,
 	},
 	controls: {
 		display: "flex",
