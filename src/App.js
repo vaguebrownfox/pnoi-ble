@@ -73,7 +73,7 @@ export default function App() {
 	const handleOn = () => {
 		if (!device) {
 			pnoi.request()
-				.then(() => pnoi.connect())
+				.then(() => pnoi.connect(setDevice))
 				.then(() => {
 					setDevice(pnoi.device);
 					console.log("connected");
