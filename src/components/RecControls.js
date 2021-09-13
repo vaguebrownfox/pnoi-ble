@@ -5,7 +5,7 @@ import { IconButton, Tooltip, Typography } from "@material-ui/core";
 import RecordStartIcon from "@material-ui/icons/FiberManualRecordRounded";
 import RecordStopIcon from "@material-ui/icons/StopRounded";
 
-import { pnoi } from "../bluetooth/Pnoi";
+import { pnoi } from "../bluetooth/pnoi";
 
 const RecControl = ({ device, recDone }) => {
 	const classes = useStyles();
