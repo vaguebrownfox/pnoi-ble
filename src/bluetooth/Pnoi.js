@@ -9,7 +9,7 @@ class Pnoi {
 			filters: [
 				{
 					name: "LE_Pnoi",
-					services: [0xcafe],
+					services: [0xcafe], // Adv. code for pnoi
 				},
 			],
 			optionalServices: [0xace0, 0xfad0],
@@ -25,7 +25,7 @@ class Pnoi {
 
 	connect(setDeviceState) {
 		if (!this.device) {
-			return Promise.reject("Device is not connected.");
+			return Promise.reject("No device to connect!");
 		}
 		this.setDeviceState = setDeviceState;
 		return this.device.gatt.connect();
@@ -50,7 +50,8 @@ class Pnoi {
 					"characteristicvaluechanged",
 					listener
 				)
-			);
+			)
+			.catch((e) => console.log("start rssi notif error", e));
 	}
 
 	stopProximityNotifications(listener) {
@@ -63,7 +64,8 @@ class Pnoi {
 					"characteristicvaluechanged",
 					listener
 				)
-			);
+			)
+			.catch((e) => console.log("stop rssi notif error", e));
 	}
 
 	disconnect() {
