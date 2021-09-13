@@ -16,7 +16,7 @@ export const Header = ({ handleOn, device }) => {
 				style={{ color: blue[800], fontWeight: "bold" }}
 				variant="h6"
 			>
-				Pnoi BLE v0x06
+				Pnoi BLE v0x07
 			</Typography>
 			<IconButton variant="contained" onClick={handleOn}>
 				<PowerIcon
