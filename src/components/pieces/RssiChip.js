@@ -6,8 +6,30 @@ import SignalIcon from "@material-ui/icons/SignalCellularAlt";
 import StartIcon from "@material-ui/icons/Adjust";
 import StopIcon from "@material-ui/icons/HighlightOff";
 
-export const RssiStat = ({ handleRssi, rssi, device }) => {
+import { pnoi } from "../../bluetooth/pnoi";
+
+export const RssiStat = ({ device }) => {
 	const classes = useStyles();
+
+	const [rssi, setRssi] = React.useState(null);
+
+	const handleRssi = async () => {
+		if (pnoi.device && !rssi) {
+			pnoi.startProximityNotifications(updateRssi.bind(this));
+		} else if (rssi) {
+			await pnoi.stopProximityNotifications();
+			stopRssi();
+		}
+	};
+	const updateRssi = (event) => {
+		const r = event.target.value;
+		setRssi(r.getFloat32());
+	};
+	const stopRssi = (e) => {
+		console.log("stop rssi e ", e);
+		setRssi(null);
+	};
+
 	return (
 		<div className={classes.controls}>
 			<Chip
@@ -30,17 +52,14 @@ const useStyles = makeStyles(() => ({
 	controls: {
 		position: "relative",
 		display: "flex",
-		flexDirection: "row-reverse",
+		justifyContent: "center",
+		alignItems: "center",
 		minHeight: 64,
-		// border: "1px solid",
-		// borderColor: blue[500],
+		// border: "1px solid blue",
 	},
 
 	rssichip: {
-		position: "relative",
-		transform: "scale(1.1)",
-		top: 0,
-		right: 0,
-		margin: 16,
+		position: "absolute",
+		transform: "scale(1)",
 	},
 }));
